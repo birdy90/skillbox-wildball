@@ -7,8 +7,8 @@ public class LevelInfo : MonoBehaviour
 {
     void Start()
     {
-        var levelNumber = PlayerPrefs.GetInt("CurrentLevel", 0);
-        var text = GetComponentInChildren<TextMeshProUGUI>();
+        int levelNumber = PlayerPrefs.GetInt("CurrentLevel", 0);
+        TextMeshProUGUI text = GetComponentInChildren<TextMeshProUGUI>();
         text.text = $"Level {levelNumber}";
     }
 }

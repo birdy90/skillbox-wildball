@@ -13,12 +13,12 @@ public class LevelsList : MonoBehaviour
     
     void Start()
     {
-        for (var i = 0; i < LevelScenes.Count; i++)
+        for (int i = 0; i < LevelScenes.Count; i++)
         {
-            var scene = LevelScenes[i];
-            var levelNumber = i + 1;
-            var button = Instantiate(LevelButtonPrefab, transform);
-            var text = button.GetComponentInChildren<TextMeshProUGUI>();
+            SceneAsset scene = LevelScenes[i];
+            int levelNumber = i + 1;
+            GameObject button = Instantiate(LevelButtonPrefab, transform);
+            TextMeshProUGUI text = button.GetComponentInChildren<TextMeshProUGUI>();
             text.text = levelNumber.ToString();
             button.GetComponent<Button>().onClick.AddListener(() =>
             {

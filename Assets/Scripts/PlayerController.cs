@@ -7,9 +7,8 @@ public class PlayerController : MonoBehaviour
     public Animator Animator;
     
     private float _lastJumpTime = -100f;
-    private float _jumpInterval = 1f;
+    private readonly float _jumpInterval = 1f;
 
-    // Update is called once per frame
     void Update()
     {
         if (Time.timeSinceLevelLoad - _lastJumpTime > _jumpInterval)
