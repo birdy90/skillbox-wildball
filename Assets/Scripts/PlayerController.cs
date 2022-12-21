@@ -1,20 +1,80 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Animator Animator;
+    public float Speed = 3f;
+    public Rigidbody PlayerRigidbody;
+    public TextMeshProUGUI Text;
+    public LevelsList LevelsList;
     
-    private float _lastJumpTime = -100f;
-    private readonly float _jumpInterval = 1f;
+    private Vector3 _lastAppliedForce = Vector3.zero;
+    private Vector3 _spawnPoint = Vector3.zero;
+    private float _timeStarted;
+    private bool _gameIsOver = false;
 
-    void Update()
+    public void Start()
     {
-        if (Time.timeSinceLevelLoad - _lastJumpTime > _jumpInterval)
+        Time.timeScale = 1f;
+        _timeStarted = Time.timeSinceLevelLoad;
+        _spawnPoint = transform.position;
+    }
+
+    public void FixedUpdate()
+    {
+        if (_gameIsOver)
         {
-            _lastJumpTime = Time.timeSinceLevelLoad;
-            Animator.SetTrigger("Jump");
+            Time.timeScale = Mathf.Lerp(Time.timeScale, 0, 0.05f);
         }
+    }
+
+    public void MoveDirection(Vector3 force)
+    {
+        if (force.magnitude > 0)
+        {
+            Vector3 appliedForce = Vector3.Lerp(_lastAppliedForce, Speed * force, 0.8f);
+            _lastAppliedForce = force * Speed;
+            PlayerRigidbody.AddForce(appliedForce);
+        }
+        else
+        {
+            _lastAppliedForce = Vector3.zero;
+        }
+    }
+
+    public void Respawn()
+    {
+        if (_gameIsOver) return;
+        _timeStarted = Time.timeSinceLevelLoad;
+        PlayerRigidbody.velocity = Vector3.zero;
+        PlayerRigidbody.transform.position = _spawnPoint;
+    }
+
+    public void ShowText(string text)
+    {
+        Text.text = text;
+        Text.gameObject.SetActive(true);
+    }
+
+    public void HideText()
+    {
+        Text.text = "";
+        Text.gameObject.SetActive(false);
+    }
+
+    public void SetFinished()
+    {
+        float timeTaken = Time.timeSinceLevelLoad - _timeStarted;
+        ShowText(timeTaken.ToString("F1") + "s");
+        StartCoroutine(FinishCountdown());
+        _gameIsOver = true;
+    }
+
+    private IEnumerator FinishCountdown()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        SceneUtils.LoadNextScene(LevelsList);
     }
 }
