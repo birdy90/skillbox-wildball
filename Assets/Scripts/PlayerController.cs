@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -26,7 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_gameIsOver)
         {
-            Time.timeScale = Mathf.Lerp(Time.timeScale, 0, 0.05f);
+            // Time.timeScale = Mathf.Lerp(Time.timeScale, 0, 0.05f);
         }
     }
 
@@ -64,6 +63,19 @@ public class PlayerController : MonoBehaviour
         Text.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Not a good move, but indicate if point was new, not the same.
+    /// Assuming points are quite far from each other
+    /// </summary>
+    /// <param name="newPoint"></param>
+    /// <returns>True if point was updated</returns>
+    public bool UpdateRespawnPoint(Vector3 newPoint)
+    {
+        bool pointIsUpdated = (_spawnPoint - newPoint).magnitude > 1;
+        _spawnPoint = newPoint;
+        return pointIsUpdated;
+    }
+
     public void SetFinished()
     {
         float timeTaken = Time.timeSinceLevelLoad - _timeStarted;
@@ -75,6 +87,6 @@ public class PlayerController : MonoBehaviour
     private IEnumerator FinishCountdown()
     {
         yield return new WaitForSecondsRealtime(2f);
-        SceneUtils.LoadNextScene(LevelsList);
+        LevelsList.LoadNextScene();
     }
 }

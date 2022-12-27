@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public Animator Animator;
-    public SceneAsset MainMenuScene;
+    public Object MainMenuScene;
     
     private static readonly int IsOpen = Animator.StringToHash("IsOpen");
 
@@ -27,6 +27,6 @@ public class PauseMenu : MonoBehaviour
 
     public void OnGoToMainMenu()
     {
-        SceneManager.LoadScene(MainMenuScene.name);
+        SceneManager.LoadScene("MainMenu");
     }
 }

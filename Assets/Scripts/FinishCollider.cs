@@ -6,6 +6,7 @@ public class FinishCollider : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         PlayerController player = collision.gameObject.GetComponentInParent<PlayerController>();
+        player.UpdateRespawnPoint(transform.position);
         player.SetFinished();
     }
 }

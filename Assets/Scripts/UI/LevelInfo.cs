@@ -8,8 +8,7 @@ public class LevelInfo : MonoBehaviour
     
     void Start()
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        int levelNumber = LevelsList.Levels.FindIndex(scene => currentScene.name == scene.name) + 1;
+        int levelNumber = LevelsList.CurrentSceneIndex;
         TextMeshProUGUI text = GetComponentInChildren<TextMeshProUGUI>();
         text.text = $"Level {levelNumber}";
     }

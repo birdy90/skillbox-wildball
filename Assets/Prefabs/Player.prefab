@@ -540,6 +540,11 @@ PrefabInstance:
       objectReference: {fileID: 4361253576106752561}
     - target: {fileID: 1019912736492168449, guid: 0eea8bae40b0c83f0a7462fb1b27c307,
         type: 3}
+      propertyPath: Offset.z
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1019912736492168449, guid: 0eea8bae40b0c83f0a7462fb1b27c307,
+        type: 3}
       propertyPath: LookAtIndicator
       value: 
       objectReference: {fileID: 8291238714404107084}
